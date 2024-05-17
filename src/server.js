@@ -1,4 +1,5 @@
 const express = require('express');
+const dbConnection = require('../database/config.js');
 
 class Server {
     constructor(){
@@ -7,20 +8,32 @@ class Server {
         this.server = require('http').createServer(this.app);
         
         this.paths = {
-            users: '/api/user'
+            users: '/api/user',
+            auth: '/api/auth'
         }
 
+        this.connectDB();
+
         this.middlewares();
+
         this.routes();   
+
+    }
+
+    async connectDB() {
+        await dbConnection();
     }
     
     middlewares() {
+   
         this.app.use( express.json() )
         this.app.use( express.static('public') );
+
     }
 
     routes() {
         this.app.use( this.paths.users, require('../src/routes/user.routes.js'))
+        this.app.use( this.paths.auth, require('../src/routes/auth.routes.js'))
     }
 
     listen() {
