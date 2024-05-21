@@ -3,27 +3,39 @@ const { Schema, model } = require('mongoose');
 
 const menuSchema = Schema({
     //atributos del esquema.
-    nombrePlato: {
+    id_Menu : {
+        type: Number,
+        required: true,
+        autoIncrement: true,
+        startAt: 1,
+        incrementBy: 1,
+        unique: true
+    },
+    url_picture :{
+        type: String,
+        requerido: true
+    },
+    name_dish: {
         type: String,
         required: true,
         trim: true,
         lowercase: true
     },
-    descripcion: {
+    description: {
         type: String,
         required: true,
         trim: true, 
         lowercase: true 
     },
-    precio : {
+    price : {
         type: Number,
         required: true
     },
-    ingredientes : {
+    ingredients : {
         type: String,
         required: true
     },
-    idRestaurante : {
+    id_Restaurant : {
         type: Number,
         required: true
     }
