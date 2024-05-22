@@ -3,7 +3,7 @@ const { Schema, model } = require('mongoose');
 
 const menuSchema = Schema({
     //atributos del esquema.
-    id_Menu : {
+    id_menu : {
         type: Number,
         required: true,
         autoIncrement: true,
@@ -35,7 +35,7 @@ const menuSchema = Schema({
         type: String,
         required: true
     },
-    id_Restaurant : {
+    id_restaurant : {
         type: Number,
         required: true
     }
