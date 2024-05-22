@@ -1,9 +1,9 @@
 const { Router } = require('express');
-const { getRestaurant, postRestaurant } = require('../controllers/restaurante.controller.js');
+const { ingresarRestaurante } = require('../controllers/restaurante.controller.js');
 const router = Router();
 
-router.get('/', getRestaurant)
+// router.get('/', getRestaurant)
 
-router.post('/', postRestaurant)
+router.post('/', ingresarRestaurante)
 
 module.exports = router;

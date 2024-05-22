@@ -19,15 +19,15 @@ const RestauranteSchema = Schema({
           required: true,
      },
      fotografias: {
-          type: Image,
+          type: String,
           required: true,
      },
      horario: {
-          type: Image,
+          type: String,
           required: true,
      },
      id_usuario: {
-          type: Schema.type.objectId,
+          type: Schema.Types.ObjectId,
           ref: 'User',
           required: true,
      }

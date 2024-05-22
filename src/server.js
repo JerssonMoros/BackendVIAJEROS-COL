@@ -35,7 +35,7 @@ class Server {
     routes() {
         this.app.use( this.paths.users, require('../src/routes/user.routes.js'))
         this.app.use( this.paths.auth, require('../src/routes/auth.routes.js'))
-        this.app.use( this.paths.auth, require('../src/routes/restaurant.routes.js'))
+        this.app.use( this.paths.restaurant, require('../src/routes/restaurant.routes.js'))
 
     }
 

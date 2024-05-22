@@ -1,4 +1,3 @@
-const bcryptjs = require('bcryptjs');
 const Restaurant = require('../models/restaurant.model.js')
 
 const ingresarRestaurante = (req, res) => {
@@ -50,5 +49,6 @@ const actualizarRestaurante = (req, res) => {
 }
 
 module.exports = {
-    ingresarRestaurante
+    ingresarRestaurante,
+    actualizarRestaurante
 }
