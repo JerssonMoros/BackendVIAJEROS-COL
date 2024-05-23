@@ -1,4 +1,4 @@
-const Ratings = require('../models/ratings.model.js');
+const Ratings = require('../models/rating.model.js');
 
 const getRatings = (req, res) => {
     try {
