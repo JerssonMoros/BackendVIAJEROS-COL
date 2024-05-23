@@ -3,15 +3,7 @@ const { Schema, model } = require('mongoose');
 
 const menuSchema = Schema({
     //atributos del esquema.
-    id_menu : {
-        type: Number,
-        required: true,
-        autoIncrement: true,
-        startAt: 1,
-        incrementBy: 1,
-        unique: true
-    },
-    url_picture :{
+      url_picture :{
         type: String,
         requerido: true
     },
@@ -36,9 +28,10 @@ const menuSchema = Schema({
         required: true
     },
     id_restaurant : {
-        type: Number,
-        required: true
+        type: Schema.Types.objectId,
+        ref:'Restaurant',
+        required: true,
     }
 });
 
-module.exports = model( 'Menus', userSchema )
+module.exports = model( 'Menus', menuSchema )

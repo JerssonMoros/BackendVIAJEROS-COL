@@ -7,7 +7,6 @@ const router = Router();
 router.get('/', getMenus)
 
 router.post('/', [
-    check('id_menu', 'El id_menu es obligatorio').not().isEmpty(),
     check('url_picture', 'La ruta de la imagen es obligatorio.').not().isEmpty(),
     check('name_dish', 'El nombre del plato es requerido.').not().isEmpty(),
     check('description', 'La descripción es requerida.').not().isEmpty(),

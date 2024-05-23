@@ -1,15 +1,14 @@
 const bcryptjs = require('bcryptjs');
 const Menus = require('../models/menus.model.js')
 
-const getMenu = (req, res) => {
-    res.send('Se van a listar los menus del Restuarante')
+const getMenus = (req, res) => {
+    res.send('Se van a listar los menus del Restaurante')
 }
 
 const postMenu = (req, res) => {
 
     try {
-        const {id_Menu, 
-               url_picture,
+        const {url_picture,
                name_dish,
                description,
                price,
@@ -17,7 +16,6 @@ const postMenu = (req, res) => {
                id_restaurant } = req.body;
 
             const data = {
-                id_Menu, 
                 url_picture,
                 name_dish,
                 description,
@@ -27,11 +25,12 @@ const postMenu = (req, res) => {
             }
 
             //Encriptar contrasena
-            const encriptedPass = bcryptjs.genSaltSync();
-            data.password = bcryptjs.hashSync(password, encriptedPass);
+            //const encriptedPass = bcryptjs.genSaltSync();
+            //data.password = bcryptjs.hashSync(password, encriptedPass);
             
             const menu = new Menus( data );
-            // user.save();
+           
+            menu.save();
 
             return res.status(201).json({
                 ok: true,
