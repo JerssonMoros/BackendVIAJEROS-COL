@@ -11,7 +11,7 @@ const { Schema, model } = require('mongoose');
 const ratingSchema = new Schema({
   
     quality: {
-        type: String,
+        type: Number,
         required: true,
     },
     price: {
@@ -19,7 +19,7 @@ const ratingSchema = new Schema({
         required: true,
     },
     customerService: {
-        type: String,
+        type: Number,
         required: true,
     },
     comments: {

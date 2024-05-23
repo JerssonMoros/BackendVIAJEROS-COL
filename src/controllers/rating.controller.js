@@ -1,21 +1,18 @@
 const Ratings = require('../models/rating.model.js');
 
-const getRatings = (req, res) => {
+const getRatings = async (req, res) => {
     try {
-      
-        Ratings.find({}, (err, ratings) => {
-            if (err) {
-                return res.status(500).json({ error: 'Error interno del servidor' });
-            }
-            res.status(200).json({ ratings });
-        });
+        const ratings = await Ratings.find({})
+            .populate('restaurantID', 'name location')
+            .populate('userID', 'username email');
+        res.status(200).json({ ratings });
     } catch (error) {
         console.log(error);
-        res.status(500).send({ error: 'Error interno del servidor' });
+        res.status(500).json({ error: 'Error interno del servidor' });
     }
-}
+};
 
-const postRating = (req, res) => {
+const postRating = async (req, res) => {
     try {
         const { quality, price, customerService, comments, restaurantID, userID } = req.body;
 
@@ -29,24 +26,74 @@ const postRating = (req, res) => {
         };
 
         const newRating = new Ratings(data);
-        newRating.save((err, savedRating) => {
-            if (err) {
-                console.log(err);
-                return res.status(500).json({ error: 'Error al guardar la calificación' });
-            }
-            return res.status(201).json({
-                ok: true,
-                msg: 'Calificación creada con éxito.',
-                rating: savedRating
-            });
+        const savedRating = await newRating.save();
+
+        res.status(201).json({
+            ok: true,
+            msg: 'Calificación creada con éxito.',
+            rating: savedRating
         });
     } catch (error) {
         console.log(error);
-        res.status(500).send({ error: 'Error interno del servidor' });
+        res.status(500).json({ error: 'Error al guardar la calificación' });
     }
-}
+};
+
+const putRating = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { quality, price, customerService, comments, restaurantID, userID } = req.body;
+
+        const updatedData = {
+            quality,
+            price,
+            customerService,
+            comments,
+            restaurantID,
+            userID
+        };
+
+        const updatedRating = await Ratings.findByIdAndUpdate(id, updatedData, { new: true, runValidators: true });
+
+        if (!updatedRating) {
+            return res.status(404).json({ error: 'Calificación no encontrada' });
+        }
+
+        res.status(200).json({
+            ok: true,
+            msg: 'Calificación actualizada con éxito.',
+            rating: updatedRating
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: 'Error al actualizar la calificación' });
+    }
+};
+
+const deleteRating = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const deletedRating = await Ratings.findByIdAndDelete(id);
+
+        if (!deletedRating) {
+            return res.status(404).json({ error: 'Calificación no encontrada' });
+        }
+
+        res.status(200).json({
+            ok: true,
+            msg: 'Calificación eliminada con éxito.',
+            rating: deletedRating
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: 'Error al eliminar la calificación' });
+    }
+};
 
 module.exports = {
     getRatings,
-    postRating
+    postRating,
+    putRating,
+    deleteRating
 };
