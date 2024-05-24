@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
-const { getMenus, postMenu } = require('../controllers/menu.controller.js');
+const { getMenus, postMenu, deleteMenu, patchMenu} = require('../controllers/menu.controller.js');
 const validateError = require('../middlewares/validateErrors.js');
 const router = Router();
 
@@ -15,5 +15,15 @@ router.post('/', [
     check('id_restaurant', 'El id_restaurante es requerido.').not().isEmpty(),
     validateError
 ], postMenu)
+
+router.delete('/:id',[
+    check('id', 'El id es requerido.').not().isEmpty(),
+    validateError
+], deleteMenu)
+
+router.patch('/:id',[
+    check('id', 'El id es requerido.').not().isEmpty(),
+    validateError
+], patchMenu)
 
 module.exports = router;

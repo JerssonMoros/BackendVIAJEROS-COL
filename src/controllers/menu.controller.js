@@ -1,8 +1,11 @@
-const bcryptjs = require('bcryptjs');
 const Menus = require('../models/menus.model.js')
 
-const getMenus = (req, res) => {
-    res.send('Se van a listar los menus del Restaurante')
+const getMenus = async ( req = request, res = response) => {
+    //const menus = await Menus.find().populate('id_restaurant');
+    const menus = await Menus.find();
+    return res.json({
+        ok: 'ok',
+        data: menus})
 }
 
 const postMenu = (req, res) => {
@@ -24,12 +27,7 @@ const postMenu = (req, res) => {
                 id_restaurant 
             }
 
-            //Encriptar contrasena
-            //const encriptedPass = bcryptjs.genSaltSync();
-            //data.password = bcryptjs.hashSync(password, encriptedPass);
-            
-            const menu = new Menus( data );
-           
+            const menu = new Menus( data );         
             menu.save();
 
             return res.status(201).json({
@@ -49,10 +47,68 @@ const postMenu = (req, res) => {
           }
     }
 
-    // res.send('Se va a crear un usario desde el controlador')
 }
+
+const deleteMenu = async (req = request, res = response) => {
+    try {
+        const { id } = req.params;
+        console.log("id"+id);
+
+        const menu = await Menus.findByIdAndDelete(id);
+
+
+        if (!menu) {
+            return res.status(404).json({
+                ok: false,
+                msg: 'Menú no encontrado'
+            });
+        }
+
+        return res.json({
+            ok: true,
+            msg: 'Menú eliminado con éxito',
+            menu
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({ error: 'Error interno del servidor' });
+    }
+};
+
+const patchMenu = async (req = request, res = response) => {
+    try {
+        const { id } = req.params;
+        const { description, price } = req.body;
+
+        const menu = await Menus.findByIdAndUpdate(
+            id,
+            { description, price },
+            { new: true } // Esto devuelve el documento actualizado
+        );
+
+        if (!menu) {
+            return res.status(404).json({
+                ok: false,
+                msg: 'Menú no encontrado'
+            });
+        }
+
+        return res.json({
+            ok: true,
+            msg: 'Menú actualizado con éxito',
+            menu
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({ error: 'Error interno del servidor' });
+    }
+};
+
+
 
 module.exports = {
     getMenus,
-    postMenu
+    postMenu,
+    deleteMenu,
+    patchMenu
 }

@@ -27,10 +27,10 @@ const menuSchema = Schema({
         type: String,
         required: true
     },
-    id_restaurant : {
-        type: Schema.Types.objectId,
-        ref:'Restaurant',
-        required: true,
+    id_restaurant: {
+        type: Schema.Types.ObjectId,
+        ref: 'Restaurant',
+        require: true
     }
 });
 
