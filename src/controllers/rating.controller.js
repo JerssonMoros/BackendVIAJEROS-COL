@@ -3,8 +3,6 @@ const Ratings = require('../models/rating.model.js');
 const getRatings = async (req, res) => {
     try {
         const ratings = await Ratings.find({})
-            .populate('restaurantID', 'name location')
-            .populate('userID', 'username email');
         res.status(200).json({ ratings });
     } catch (error) {
         console.log(error);
@@ -13,31 +11,31 @@ const getRatings = async (req, res) => {
 };
 
 const postRating = async (req, res) => {
-    try {
-        const { quality, price, customerService, comments, restaurantID, userID } = req.body;
+        try {
+            const { quality, price, customerService, comments, restaurantID, userID } = req.body;
 
-        const data = {
-            quality,
-            price,
-            customerService,
-            comments,
-            restaurantID,
-            userID
-        };
+            const data = {
+                quality,
+                price,
+                customerService,
+                comments,
+                restaurantID,
+                userID
+            };
 
-        const newRating = new Ratings(data);
-        const savedRating = await newRating.save();
+            const newRating = new Ratings(data);
+            const savedRating = await newRating.save();
 
-        res.status(201).json({
-            ok: true,
-            msg: 'Calificación creada con éxito.',
-            rating: savedRating
-        });
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({ error: 'Error al guardar la calificación' });
-    }
-};
+            res.status(201).json({
+                ok: true,
+                msg: 'Calificación creada con éxito.',
+                rating: savedRating
+            });
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({ error: 'Error al guardar la calificación' });
+        }
+    };
 
 const putRating = async (req, res) => {
     try {
@@ -87,9 +85,10 @@ const deleteRating = async (req, res) => {
         });
     } catch (error) {
         console.log(error);
-        res.status(500).json({ error: 'Error al eliminar la calificación' });
+        res.status(500).json({ error: 'Error ' });
     }
 };
+
 
 module.exports = {
     getRatings,
