@@ -1,8 +1,4 @@
 const Rols = require('../models/rols.model.js');
-const { restart } = require('nodemon');
-const { put } = require('../routes/rols.routes.js');
-
-
 
 const getIDRols = async (req, res) => {
     try {
@@ -37,6 +33,7 @@ const deleteRols = async (req, res) => {
         res.status(500).json({ error: 'Error ' });
     }
 }
+
 const postRols = async (req, res) => {
     try {
         const {name} = req.body;
@@ -53,6 +50,7 @@ const postRols = async (req, res) => {
         res.status(500).json({ error: 'Error ' });
     }
 }
+
 const putRols = async (req, res) => {
 
     try {
@@ -70,5 +68,10 @@ const putRols = async (req, res) => {
 }
     
 
-module.exports= {getIDRols,deleteRols,postRols,putRols} 
+module.exports= {
+    getIDRols,
+    deleteRols,
+    postRols,
+    putRols
+} 
 

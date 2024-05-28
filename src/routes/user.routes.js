@@ -3,8 +3,9 @@ const { check } = require('express-validator');
 const { getUsers, postUser, putUser, deleteUser } = require('../controllers/user.controller.js');
 const validateError = require('../middlewares/validateErrors.js');
 const router = Router();
+const validarJWT = require('../middlewares/validarJWT.js')
 
-router.get('/', getUsers)
+router.get('/', validarJWT ,getUsers)
 
 router.post('/', [
     check('name', 'El nombre es obligatorio').not().isEmpty(),

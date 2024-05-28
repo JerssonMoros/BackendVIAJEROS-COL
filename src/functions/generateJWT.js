@@ -4,7 +4,7 @@ const generateJWT = ( user ) => {
     return new Promise( (resolve, reject) => {
         const secret = "!=PQii;H7;YH6PnM1~LQ(d3MYBDkBq"
         const payload = {
-            user
+            id: user._id
         }
 
         jwt.sign(payload, secret, {

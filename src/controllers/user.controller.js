@@ -2,7 +2,8 @@ const bcryptjs = require('bcryptjs');
 const Users = require('../models/users.model.js')
 
 const getUsers = async (req, res) => {
-    const users = await Users.find().populate('role', '-_id name');
+    console.log(req.user)
+    const users = await Users.find();
     return res.json({
         ok: true,
         users
