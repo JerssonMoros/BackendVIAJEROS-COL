@@ -1,18 +1,36 @@
 const bcryptjs = require('bcryptjs');
 const Users = require('../models/users.model.js')
 
-const getUsers = (req, res) => {
-    res.send('Se van a listar los usarios desde el controlador')
+const getUsers = async (req, res) => {
+    const users = await Users.find().populate('role', '-_id name');
+    return res.json({
+        ok: true,
+        users
+    })
 }
 
 const postUser = (req, res) => {
 
     try {
-        const { name, email, password } = req.body;
+        const { name,
+            last_name,
+            email,
+            number_phone,
+            nationality,
+            password,
+            last_login,
+            date_create 
+        } = req.body;
 
             const data = {
                 name,
-                email
+                last_name,
+                email,
+                number_phone,
+                nationality,
+                password,
+                last_login,
+                date_create 
             }
 
             //Encriptar contrasena
@@ -20,7 +38,7 @@ const postUser = (req, res) => {
             data.password = bcryptjs.hashSync(password, encriptedPass);
             
             const user = new Users( data );
-            // user.save();
+            user.save();
 
             return res.status(201).json({
                 ok: true,
@@ -30,19 +48,61 @@ const postUser = (req, res) => {
 
     } catch (error) {
         console.log(error);
-        if (error.code === 11000) {
-            // El código 11000 es el código de error de duplicado en MongoDB
-            res.status(400).send({ error: 'El correo ya existe' });
-          } else {
-            // Manejar otros posibles errores
-            res.status(500).send({ error: 'Error interno del servidor' });
-          }
+        return res.status(500).json({
+            ok: false,
+            error
+        })
+    }
+}
+
+const putUser = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { password, ...newInfoUser } = req.body;
+
+        if ( password ) {
+            const encriptedPass = bcryptjs.genSaltSync();
+            newInfoUser.password = bcryptjs.hashSync(password, encriptedPass);
+        }
+
+        const user = await Users.findByIdAndUpdate(id, newInfoUser);
+
+        return res.status(200).json({
+            ok: true,
+            msg: 'Usuario actualizado con exito',
+            user
+        })
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            ok: false,
+            error: 'Error en el servidor'
+        })
+    } 
+}
+
+const deleteUser = async ( req, res) => {
+    try {
+        const { id } = req.params;
+        
+        return res.status(200).json({
+            ok: true,
+            msg: 'Usuario eliminado con exito'
+        })
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            ok: false,
+            error: 'Error en el servidor'
+        })
     }
 
-    // res.send('Se va a crear un usario desde el controlador')
+    
 }
 
 module.exports = {
     getUsers,
-    postUser
+    postUser,
+    putUser,
+    deleteUser
 }

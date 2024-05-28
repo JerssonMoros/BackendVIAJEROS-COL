@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
-const { getUsers, postUser } = require('../controllers/user.controller.js');
+const { getUsers, postUser, putUser, deleteUser } = require('../controllers/user.controller.js');
 const validateError = require('../middlewares/validateErrors.js');
 const router = Router();
 
@@ -15,5 +15,10 @@ router.post('/', [
     validateError
 ], postUser)
 
-module.exports = router;
+router.put('/:id', putUser)
 
+router.delete('/:id', deleteUser)
+
+
+
+module.exports = router;

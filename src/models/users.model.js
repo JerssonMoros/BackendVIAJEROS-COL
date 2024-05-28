@@ -9,8 +9,11 @@
 const { Schema, model } = require('mongoose');
 
 const userSchema = Schema({
-    //Defino mis atrubutos del esquema.
     name: {
+        type: String,
+        required: true,
+    },
+    last_name: {
         type: String,
         required: true,
     },
@@ -21,10 +24,28 @@ const userSchema = Schema({
         lowercase: true, //El correo lo pasa a minusculas
         unique: [true, 'El correo ya existe'] //Validar que el correo no exista
     },
+    number_phone: {
+        type: String,
+        default: "0"
+    },
+    nationality: {
+        type: String,
+        
+    },
     password: {
         type: String,
         required: true,
-    }
+    },
+    last_login: {
+        type: Date,
+        default: Date.now
+    },
+    date_create: {
+        type: Date,
+        default: Date.now
+    },
+    
+
 })
 
-module.exports = model( 'Users', userSchema )
+module.exports = model( 'User', userSchema )
