@@ -12,7 +12,8 @@ class Server {
             auth: '/api/auth',
             menu: '/api/menu',
             restaurant: '/api/restaurant',
-            rating: '/api/rating'
+            rating: '/api/rating',
+            rols: '/api/rols',
         }
 
         this.connectDB();
@@ -39,8 +40,8 @@ class Server {
         this.app.use( this.paths.auth, require('../src/routes/auth.routes.js'))
         this.app.use( this.paths.menu, require('../src/routes/menu.routes.js'))
         this.app.use( this.paths.restaurant, require('../src/routes/restaurant.routes.js'))
-
         this.app.use( this.paths.rating, require('../src/routes/rating.routes.js'))
+        this.app.use( this.paths.rols, require('../src/routes/rols.routes.js'))
     }
 
     listen() {
