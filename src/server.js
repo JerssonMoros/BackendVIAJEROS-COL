@@ -12,6 +12,7 @@ class Server {
             auth: '/api/auth',
             menu: '/api/menu',
             restaurant: '/api/restaurant',
+            rating: '/api/rating'
         }
 
         this.connectDB();
@@ -39,6 +40,7 @@ class Server {
         this.app.use( this.paths.menu, require('../src/routes/menu.routes.js'))
         this.app.use( this.paths.restaurant, require('../src/routes/restaurant.routes.js'))
 
+        this.app.use( this.paths.rating, require('../src/routes/rating.routes.js'))
     }
 
     listen() {
