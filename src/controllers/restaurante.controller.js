@@ -1,10 +1,10 @@
 const Restaurant = require("../models/restaurant.model.js");
 
 const verRestaurante = async (req, res) => {
-    const users = await Restaurant.find().populate('nombre_restaurante', 'ubicacion', 'categoria', 'descripcion', 'fotografias', 'horario','id_usuario');
+    const restaurantes = await Restaurant.find()
     return res.json({
-        ok: "ok",
-        data: restaurante,
+        ok: true,
+        data: restaurantes,
     });
 };
 const ingresarRestaurante = (req, res) => {

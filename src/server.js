@@ -1,5 +1,6 @@
 const express = require('express');
 const dbConnection = require('../database/config.js');
+const cors = require('cors');
 
 class Server {
     constructor(){
@@ -29,6 +30,8 @@ class Server {
     }
     
     middlewares() {
+
+        this.app.use( cors() );
    
         this.app.use( express.json() )
         this.app.use( express.static('public') );
