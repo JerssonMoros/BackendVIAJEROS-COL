@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
-const { getRatings, postRating, putRating, deleteRating } = require('../controllers/rating.controller.js');
+const { getRatings, postRating, putRating, deleteRating, ratingById } = require('../controllers/rating.controller.js');
 const validateError = require('../middlewares/validateErrors.js');
 
 const router = Router();
@@ -34,5 +34,6 @@ router.put('/:id', [
 
 // Eliminar una calificación existente
 router.delete('/:id', deleteRating);
+router.get('/restaurant/:restaurantID', ratingById)
 
 module.exports = router;

@@ -107,7 +107,7 @@ const restaurantById = async( req, res) => {
             ok: true,
             infoRestaurant            
         })
-
+console.log(id)
     }catch (error) {
         console.log(error);
         return res.status(500).json({

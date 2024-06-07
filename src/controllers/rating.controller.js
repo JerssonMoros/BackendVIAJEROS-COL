@@ -2,10 +2,10 @@ const Ratings = require('../models/rating.model.js');
 
 const getRatings = async (req, res) => {
     try {
-        const ratings = await Ratings.find({}).populate('restaurantID')
-            //.populate('userID', 'username email');
-            console.log(ratings);
-            res.status(200).json({ ratings });
+        const datosRest = await Ratings.find({}).populate('restaurantID')
+        const datosUser = await Ratings.find({}).populate('userID', 'username email')
+            console.log(datosRest, datosUser);
+            res.status(200).json({ datosRest, datosUser});
     } catch (error) {
         console.log(error);
         res.status(500).json({ error: 'Error interno del servidor' });
@@ -90,10 +90,29 @@ const deleteRating = async (req, res) => {
         res.status(500).json({ error: 'Error al eliminar la calificación' });
     }
 };
+const ratingById = async( req, res) => {
+    try { 
+        const {restaurantID} = req.params;
+        const restaurante = await Ratings.find({restaurantID: restaurantID})
+        console.log(restaurante)
+        
+        return res.status(200).json({
+            ok: true,
+           restaurante         
+        });
+    }catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            ok: false,
+            errors: ['Error en el servidor']
+        })
+    }
+}
 
 module.exports = {
     getRatings,
     postRating,
     putRating,
-    deleteRating
+    deleteRating,
+    ratingById
 };
