@@ -1,3 +1,4 @@
+const { findById } = require("../models/rating.model.js");
 const Restaurant = require("../models/restaurant.model.js");
 
 const verRestaurante = async (req, res) => {
@@ -87,7 +88,6 @@ const borrarRestaurante = async( req, res) => {
         restaurante = await Restaurant.findByIdAndUpdate(id, {state: false});
 
         return res.status(400).json({
-            ok: 'User deleted',
             ok: true,
         })
 
@@ -99,10 +99,27 @@ const borrarRestaurante = async( req, res) => {
         })
     }
 }
+const restaurantById = async( req, res) => {
+    try { 
+        const {id} = req.params;
+        const infoRestaurant = await Restaurant.findById(id);
+        return res.status(200).json({
+            ok: true,
+            infoRestaurant            
+        })
 
+    }catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            ok: false,
+            errors: ['Error en el servidor']
+        })
+    }
+}
 module.exports = {
     verRestaurante,
     ingresarRestaurante,
     actualizarRestaurante,
-    borrarRestaurante
+    borrarRestaurante,
+    restaurantById
 };

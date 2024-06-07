@@ -28,7 +28,7 @@ const ratingSchema = new Schema({
     },
     restaurantID: {
         type: Schema.Types.ObjectId,
-        ref: 'Restaurante',
+        ref: 'Restaurant',
         required: true
     },
     userID: {

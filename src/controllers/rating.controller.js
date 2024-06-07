@@ -2,10 +2,10 @@ const Ratings = require('../models/rating.model.js');
 
 const getRatings = async (req, res) => {
     try {
-        const ratings = await Ratings.find({})
-            .populate('restaurantID', 'name location')
-            .populate('userID', 'username email');
-        res.status(200).json({ ratings });
+        const ratings = await Ratings.find({}).populate('restaurantID')
+            //.populate('userID', 'username email');
+            console.log(ratings);
+            res.status(200).json({ ratings });
     } catch (error) {
         console.log(error);
         res.status(500).json({ error: 'Error interno del servidor' });
